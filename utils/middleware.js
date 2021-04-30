@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken')
 const logger = require('./logger')
 const User = require('../models/user')
 
-
 const requestLogger = (request, response, next) => {
     logger.info('Method: ', request.method)
     logger.info('Path: ', request.path)
@@ -19,7 +18,6 @@ const tokenExtractor = (request, response, next) => {
     next()
 }
 
-
 const userExtractor = async (request, response, next) => {
     const decodeToken = jwt.verify(request.token, process.env.SECRET) 
     if (!request.token || !decodeToken) {
@@ -29,11 +27,9 @@ const userExtractor = async (request, response, next) => {
     next()
 }
 
-
 const unknownEndpoint = (request, response) => {
     response.status(400).send({ error: 'unknown endpoint' })
 }
-
 
 const errorHandler = (error, request, response, next) => {
     if (error.name === 'CastError') {
@@ -54,9 +50,6 @@ const errorHandler = (error, request, response, next) => {
     
     next(error)
 }
-
-
-
 
 module.exports = {
     requestLogger,
